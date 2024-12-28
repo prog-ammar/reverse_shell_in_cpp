@@ -1,0 +1,125 @@
+Socket Programming in C/C++
+
+what is socket?
+socket is like the file handling but rather than reading or writing data on 
+files instead socket is used to read or write on Network.(uses file descriptor)
+
+
+2 types of socket:
+1.Stream Socket --uses TCP/IP --IP for Routing --Error free/complete --same order
+2.Datagram Scoket --uses UDP/IP --IP for Routing --Drops some Packets
+
+Stream Socket ->  SOCK_STREAM
+Datagram Socket ->  SOCK_DGRAM
+
+Stream Socket -> Connection Oriented
+Datagram Socket -> not Connection Oriented/Connection Less Socket
+
+Big Endian -- smallest to largest byte --most significant first
+Little Endian --largest to smallest byte --less signficant first
+
+Big Endian -> Network Byte Order
+Little Endian -> Host Byte Order/ Intel or x86 Systems store in this format
+
+so when sending to network it must changed into Big Endian.
+
+Functions
+htons for Host to Network Byte Order or Little to Big Endian.
+ntohs for Network to Host Byte Order or Big to Little Endian.
+
+htons -> for Server
+ntohs -> for Client
+
+
+--->>>CLIENT
+
+
+-->>Socket Function
+--Accepts 3 Parameters
+1 -> Type of Ip ->  i.e. for ipv4 AF_INET
+2 -> Type of Socket -> i.e. SOCK_STREAM for TCP
+3 -> No of layers we are using -> i.e. 0
+
+int socket1=socket(AF_INET,SOCK_STREAM,0);
+Returns integer File Descriptor
+
+
+-->>Connect Function
+Accepts 3 Parameter
+1 -> File Descriptor -> i.e socket1
+2 -> Address of Server -> for ipv4 sockaddr_in strut vairable
+3 -> Size of Address -> len(variable)
+
+-> for Defining the Address of Server
+string ip="whatever ip is";
+struct sockaddr_in address;
+address.sin_family=AF_INET; ->ipv4
+address.sin_port=htons(1234); -> host to network byte order
+inet_pton(AF_INET,ip.c_str(),&address.sin_addr);
+
+-> for Connect
+connect(socket1,&address,sizeof(address));
+we can store in some variable to check wheater the client connection is Successfull
+int r=connect(socket1,&address,sizeof(address));
+if(r==0)
+
+
+-->>Send Function
+Accepts 4 parameters
+1 -> Socket
+2 -> message or data
+3 -> size of data
+4 -> no of flags
+
+-> for sending data
+string buffer;
+buffer="hi";
+send(socket1,buffer.c_str(),sizeof(buffer),0);
+
+
+-->>Reciecve Function
+Accepts 4 parameters
+1 -> Socket
+2 -> variable to store data
+3 -> size of reading
+4 -> no of flags
+
+-> for Receving data
+char buffer[4096];
+recv(socket1,buffer,4096,0);
+cout<<buffer;
+
+
+--->>> SERVER
+
+-->>Bind Function
+Accepts 3 parameters
+1 -> Server Socket
+2 -> address of Server Address
+3 -> size of Server Address
+
+int r= bind(socket,&address,sizeof(address);
+if(r==0)
+
+-->>Listen Function
+Accepts 2 parameters
+1 -> Server socket to listen
+2 -> no of connections you want to listen
+
+int l=listen(socket,1);
+
+-->>Accept Function
+Accpets 3 parameters
+1 -> Server socket
+2 -> address of client address
+3 -> address of size of client address
+
+->for storing client address
+struct sockaddr_in client;
+int clientaddsize=sizeof(client);
+int clientSocketFD=accept(socket,&client,&clientaddsize); makes file descriptor to read or write on network 
+
+->for reciving
+char buffer[4096];
+recv(client,buffer,4096,0);
+cout<<buffer;
