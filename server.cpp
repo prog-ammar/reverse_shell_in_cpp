@@ -37,7 +37,7 @@ int main()
     string buffer;
     cout<<" >>>";
     getline(cin,buffer);
-    int sent=send(clientSocketFD,buffer.c_str(),sizeof(buffer),0);
+    int sent=send(clientSocketFD,buffer.c_str(),buffer.size(),0);
     if(check(sent))
     {
         cerr<<"successfully sent"<<endl;
