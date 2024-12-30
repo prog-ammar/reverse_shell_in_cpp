@@ -35,6 +35,8 @@ int main()
     socklen_t clientaddsize=sizeof(client);
     int clientSocketFD=accept(server,(struct sockaddr*)&client,&clientaddsize);
     check(clientSocketFD,server);
+    do
+    {
     string buffer;
     cout<<" >>>";
     getline(cin,buffer);
@@ -43,6 +45,7 @@ int main()
         cout<<"Closing Connection ";
         close(clientSocketFD);
         close(server);
+        break;
     }
     else
     {
@@ -61,4 +64,6 @@ int main()
     close(clientSocketFD); 
     close(server);
     }
+    }
+    while(buffer!="exit");
 }
