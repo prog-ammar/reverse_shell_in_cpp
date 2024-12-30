@@ -23,7 +23,6 @@ int main()
     }
     else
     {
-        cout<<"Connection Successfull";
         char buffer[4096];
         memset(buffer, 0, sizeof(buffer));
         int l=recv(server,buffer,4096,0);
@@ -44,10 +43,6 @@ int main()
             cout<<"Sending Error";
             close(server);
             exit(1);
-        }
-        else
-        {
-            cout<<"Sending Successfull";
         }
         fclose(p);
     }
