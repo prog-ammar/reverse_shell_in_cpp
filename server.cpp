@@ -50,20 +50,16 @@ int main()
     else
     {
         int sent=send(clientSocketFD,buffer.c_str(),buffer.size(),0);
-    if(check(sent,server))
-    {
-        cerr<<"successfully sent"<<endl;
     }
     char output[4096];
     int recieve=recv(clientSocketFD,output,sizeof(output),0);
     if(check(recieve,server))
     {
-        cout<<"Successfully recieved "<<endl;
-        cout<<"Output : "<<output;
+        cout<<output;
     }
-    close(clientSocketFD); 
-    close(server);
     }
     }
     while(1);
+    close(clientSocketFD); 
+    close(server);
 }
