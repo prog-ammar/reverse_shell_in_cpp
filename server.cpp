@@ -47,7 +47,7 @@ int main()
     if(check(recieve))
     {
         cout<<"Successfully recieved "<<endl;
-        cout<<"Output : ";
+        cout<<"Output : "<<output;
     }
     close(clientSocketFD); 
     close(server);
