@@ -65,5 +65,5 @@ int main()
     close(server);
     }
     }
-    while(buffer!="exit");
+    while(1);
 }
