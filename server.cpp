@@ -6,13 +6,14 @@
 
 using namespace std;
 
-void check(int a)
+int check(int a)
 {
     if(a==-1)
     {
         cout<<"An Error is Occured "<<endl;
         exit(0);
     }
+    return 1;
 }
 
 
