@@ -58,7 +58,6 @@ int main()
         cout<<output;
     }
     }
-    }
     while(1);
     close(clientSocketFD); 
     close(server);
