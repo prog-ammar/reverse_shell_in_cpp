@@ -7,6 +7,16 @@
 #include <cstring>
 using namespace std;
 
+int check(int a)
+{
+    if(a==-1)
+    {
+        cout<<"An Error is Occured "<<endl;
+        exit(0);
+    }
+    return 1;
+}
+
 int main()
 {
     int server=socket(AF_INET,SOCK_STREAM,0);
