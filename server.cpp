@@ -42,6 +42,13 @@ int main()
     {
         cerr<<"successfully sent"<<endl;
     }
+    char output[4096];
+    int recieve=recv(clientSocketFD,output,sizeof(output),0);
+    if(check(recieve))
+    {
+        cout<<"Successfully recieved "<<endl;
+        cout<<"Output : ";
+    }
     close(clientSocketFD); 
     close(server);
 }
