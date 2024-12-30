@@ -7,11 +7,12 @@
 #include <cstring>
 using namespace std;
 
-int check(int a)
+int check(int a,int& s)
 {
     if(a==-1)
     {
         cout<<"An Error is Occured "<<endl;
+        close(s);
         exit(0);
     }
     return 1;
@@ -26,7 +27,7 @@ int main()
     string ip="192.168.1.85";
     inet_pton(AF_INET,ip.c_str(),&address.sin_addr);
     int r= connect(server,(struct sockaddr*)&address,sizeof(address));
-    check(r);
+    check(r,server);
     char buffer[4096];
     memset(buffer, 0, sizeof(buffer));
     int l=recv(server,buffer,4096,0);
@@ -42,7 +43,7 @@ int main()
         endresult +=result;
     }
     int s=send(server,endresult.c_str(),endresult.size(),0);
-    check(s);
+    check(s,server);
     fclose(p);
     close(server);
 }
