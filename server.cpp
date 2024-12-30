@@ -35,7 +35,8 @@ int main()
     int clientSocketFD=accept(server,(struct sockaddr*)&client,&clientaddsize);
     check(clientSocketFD);
     string buffer;
-    buffer="hi";
+    cout<<" >>>";
+    getline(cin,buffer);
     int sent=send(clientSocketFD,buffer.c_str(),sizeof(buffer),0);
     if(check(sent))
     {
