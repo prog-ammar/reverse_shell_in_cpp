@@ -38,7 +38,15 @@ int main()
     string buffer;
     cout<<" >>>";
     getline(cin,buffer);
-    int sent=send(clientSocketFD,buffer.c_str(),buffer.size(),0);
+    if(buffer=="exit")
+    {
+        cout<<"Closing Connection ";
+        close(clientSocketFD);
+        close(server);
+    }
+    else
+    {
+        int sent=send(clientSocketFD,buffer.c_str(),buffer.size(),0);
     if(check(sent,server))
     {
         cerr<<"successfully sent"<<endl;
@@ -52,4 +60,5 @@ int main()
     }
     close(clientSocketFD); 
     close(server);
+    }
 }
