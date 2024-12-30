@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int check(int a,int s)
+int check(int a,int& s)
 {
     if(a==-1)
     {
