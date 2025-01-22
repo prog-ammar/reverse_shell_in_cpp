@@ -6,14 +6,14 @@
 
 using namespace std;
 
-class Connect{
+class makeServer{
     public:
     string ip;
     int port;
     int server;
     int client;
 
-    Connect(string address,int portt)
+    makeServer(string address,int portt)
     {
         ip=address;
         port=portt;
@@ -73,6 +73,8 @@ class Connect{
             int r=recv(client,output,4096,0);
             error_check(r);
             cout<<r;
+            int s=send(client,output,4096,0);
+            error_check(r);
         } while (output!="logout");
         
     }
@@ -81,5 +83,5 @@ class Connect{
 
 int main()
 {
-  Connect connection("192.168.1.85",1234);
+  makeServer server("192.168.1.85",1234);
 }
